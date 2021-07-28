@@ -1,0 +1,119 @@
+.about-project {
+  padding-top: 110px;
+  padding-bottom: 141px;
+}
+
+.about-project__title {
+  box-sizing: border-box;
+  position: relative;
+}
+
+.about-project__title::before {
+  content: '';
+  height: 1px;
+  background: black;
+  position: absolute;
+  bottom: -23px;
+  left: 0;
+  right: 0;
+}
+
+.about-project__info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 40px;
+  list-style-type: none;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  padding-inline-start: 0;
+  margin-top: 70px;
+}
+
+.about-project__text {
+  margin-top: 26px;
+}
+
+.about-project__time-line {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  padding-inline-start: 0;
+  margin-top: 110px;
+}
+
+.about-project__time-line_blocks {
+  width: calc(100%/5);
+  text-align: center;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+.about-project__time-line_blocks:last-child {
+  width: calc(100%/1.25);
+}
+
+.about-project__time-line_block {
+  padding-top: 9px;
+  padding-bottom: 9px;
+  margin-bottom: 14px;
+}
+
+.about-project__backend {
+  background-color: black;
+  color: white;
+}
+
+.about-project__frontend {
+  background-color: #F2F2F2;
+  color: black;
+}
+
+.about-project__tech-text{
+  color: #A0A0A0;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+@media screen and (max-width: 570px) {
+  .about-project {
+    padding-top: 70px;
+    padding-bottom: 70px;
+  }
+
+  .about-project__info {
+    grid-template-columns: 1fr;
+  }
+
+  .about-project__text {
+    margin-top: 16px;
+  }
+
+  .about-project__time-line {
+    margin-top: 60px;
+  }
+
+  .about-project__time-line_blocks {
+    width: 33%;
+    font-size: 11px;
+    line-height: 13px;
+  }
+
+  .about-project__time-line_blocks:last-child {
+    width: 66%
+  }
+
+  .about-project__tech-text {
+    font-size: 11px;
+    line-height: 13px;
+  }
+}

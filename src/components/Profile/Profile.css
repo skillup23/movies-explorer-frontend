@@ -1,0 +1,133 @@
+.profile {
+  width: 410px;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  height: 100vh;
+  margin-top: -74px;
+  padding-top: 74px;
+  justify-content: center;
+}
+
+.profile__title {
+  text-align: center;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-top: 74px;
+  margin-bottom: 123px;
+}
+
+.profile__form {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.profile__block {
+  padding-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  position: relative;
+  padding-top: 17px;
+}
+
+.profile__block::before {
+  content: '';
+  width: 100%;
+  height: 0;
+  background: #E8E8E8;
+  position: absolute;
+  bottom: 0;
+}
+
+.profile__block:last-child {
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+.profile__block:first-child::before {
+  height: 1px;
+}
+
+.profile-form__label {
+  width: 100%;
+  display: block;
+  position: relative;
+  line-height: 1;
+}
+
+.profile__info {
+  max-width: 396px;
+  width: 100%;
+  padding: 0;
+  border-width: 0;
+  outline: none;
+  line-height: 1;
+}
+
+.profile__info[type=text] {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 13px;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  text-align: end;
+}
+
+.profile__info_title {
+  padding-top: 5px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  width: 100px;
+}
+
+.profile__link {
+  margin-top: 16px;
+  margin-bottom: 70px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  color: red;
+  text-decoration: none;
+}
+
+.profile__link:hover {
+  opacity: .8;
+}
+
+.profile__button {
+  justify-self: center;
+  align-self: center;
+  background-color: white;
+  border: none;
+  color: black;
+  margin: 270px auto 0 auto;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 470px) {
+  .profile {
+    width: 260px;
+  }
+  .profile__form{
+    width: 260px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+
