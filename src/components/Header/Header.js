@@ -4,7 +4,7 @@ import './Header.css';
 import Navigation from '../Navigation/Navigation';
 import { Route, Link, Switch } from "react-router-dom";
 
-function Header() {
+function Header({ loggedIn }) {
   const [isMenuOpen, setMenuOpen] = useState(false);
 
   function toggleMenu() {
@@ -14,25 +14,47 @@ function Header() {
   return (
     <Switch>
       <Route exact path='/'>
-        <header className="header page-section">
-          <Link to='/'>
-            <img
-              src={logo}
-              alt='Логотип дипломной работы'
-              className='logo header__logo'
+        {loggedIn
+          ? <header
+            className={`header page-section ${isMenuOpen ? "header__menu-open" : ""}`}>
+            <Link to='/'>
+              <img
+                src={logo}
+                alt='Логотип дипломной работы'
+                className='logo header__logo'
+              />
+            </Link>
+            <button
+              className='header__burger'
+              type='button'
+              aria-label='меню'
+              onClick={toggleMenu}
+            ></button>
+            <Navigation
+              toggleMenu={toggleMenu}
             />
-          </Link>
-          <nav className="header__links-block">
-            <Link className='header__auth-link header__link' to='signup'>
-              Регистрация
+          </header>
+
+          : <header className="header page-section">
+            <Link to='/'>
+              <img
+                src={logo}
+                alt='Логотип дипломной работы'
+                className='logo header__logo'
+              />
             </Link>
-            <Link className='header__auth-link header__link' to='signin'>
-              <div className='header__login'>
-                Войти
-              </div>
-            </Link>
-          </nav>
-        </header>
+            <nav className="header__links-block">
+              <Link className='header__auth-link header__link' to='signup'>
+                Регистрация
+              </Link>
+              <Link className='header__auth-link header__link' to='signin'>
+                <div className='header__login'>
+                  Войти
+                </div>
+              </Link>
+            </nav>
+          </header>
+        }
       </Route>
       <Route path='/(signup|signin)'>
         <header className="header__auth page-section">

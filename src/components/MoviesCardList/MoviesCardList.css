@@ -34,6 +34,17 @@
   color: white;
 }
 
+.movies-card-list__button-more_disable {
+  display: none;
+}
+
+@media screen and (max-width: 770px) {
+  .movies-card-list {
+    grid-template-columns: repeat(auto-fit, 330px);
+    grid-gap: 30px 8px;
+  }
+}
+
 @media screen and (max-width: 470px) {
   .movies-card-list {
     grid-template-columns: repeat(auto-fit, 300px);
