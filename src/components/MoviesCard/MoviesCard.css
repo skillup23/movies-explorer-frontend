@@ -28,9 +28,14 @@
   margin: 9px auto 14px 14px;
 }
 
+.movies-card__link-trailer {
+  height: 203px;
+}
+
 .movies-card__img {
   background-size: cover;
-  height: 203px;
+  width: 100%;
+  height: 100%;
 }
 
 .movies-card__flag {

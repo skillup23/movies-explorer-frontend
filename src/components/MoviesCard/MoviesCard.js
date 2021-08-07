@@ -14,22 +14,11 @@ function MoviesCard({ movie, addSaveMovie, deleteMovies }) {
       duration: movie.duration,
       year: movie.year,
       description: movie.description,
-      // movieId: movie._id,
       nameRU: movie.nameRU,
       nameEN: movie.nameEN,
       image: `https://api.nomoreparties.co${movie.image.url}`,
       trailer: movie.trailerLink,
       thumbnail: `https://api.nomoreparties.co${movie.image.url}`,
-      // country: "test3",
-      // director: "test3",
-      // duration: 12,
-      // year: "1991",
-      // description: "test3",
-      // image: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-      // trailer: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-      // thumbnail: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-      // nameRU: "тест3",
-      // nameEN: "test3",
       movieId: "554333"
     })
   }
@@ -37,6 +26,17 @@ function MoviesCard({ movie, addSaveMovie, deleteMovies }) {
   function handleDeleteClick() {
     deleteMovies(movie._id)
   }
+
+  function getTimeFromMins(mins) {
+    const hours = Math.trunc(mins / 60);
+    const minutes = mins % 60;
+    if (hours === 0) {
+      return minutes + 'м.';
+    } else {
+      return hours + 'ч. ' + minutes + 'м.';
+    }
+    
+  };
 
   return (
     <li className="movies-card">
@@ -46,26 +46,30 @@ function MoviesCard({ movie, addSaveMovie, deleteMovies }) {
       </h5>
       <p className="movies-card__time">
         {/* 1ч 47м */}
-        {movie.duration} м
+        {getTimeFromMins(movie.duration)}
       </p>
       <Switch>
         <Route exact path='/movies'>
-          <img
-            src={`https://api.nomoreparties.co${movie.image.url}`}
-            alt='Фото фильма'
-            className='movies-card__img'
-          />
+          <a href={movie.trailerLink} target='_blank' rel="noreferrer" className='movies-card__link-trailer'>
+            <img
+              src={`https://api.nomoreparties.co${movie.image.url}`}
+              alt='Фото фильма'
+              className='movies-card__img'
+            />
+          </a>
           <button type="button"
             className={`movies-card__flag ${isSaveMovie ? "movies-card__flag_active" : "movies-card__flag_disactive"}`}
             onClick={handleSaveMovie}
           ></button>
         </Route>
         <Route path='/saved-movies'>
-          <img
-            src={movie.image}
-            alt='Фото фильма'
-            className='movies-card__img'
-          />
+          <a href={movie.trailer} target='_blank' rel="noreferrer" className='movies-card__link-trailer'>
+            <img
+              src={movie.image}
+              alt='Фото фильма'
+              className='movies-card__img'
+            />
+          </a>
           <button type="button"
             className="movies-card__flag movies-card__delete"
             onClick={handleDeleteClick}
