@@ -54,6 +54,8 @@ function App() {
     }
   }, [currentUser._id, isLoggedIn]);
 
+  // console.log(isSaveMovies)
+
   //регистрация, авторизация, обновление пользователя, выход
   function onRegister({ name, email, password }) {
     mainApi.register(name, email, password)

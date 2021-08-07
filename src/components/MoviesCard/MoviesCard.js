@@ -19,7 +19,7 @@ function MoviesCard({ movie, addSaveMovie, deleteMovies }) {
       image: `https://api.nomoreparties.co${movie.image.url}`,
       trailer: movie.trailerLink,
       thumbnail: `https://api.nomoreparties.co${movie.image.url}`,
-      movieId: "554333"
+      movieId: movie.id
     })
   }
 

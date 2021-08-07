@@ -23,6 +23,8 @@ function Movies({ addSaveMovie }) {
         .finally(() => setIsCardsLoading(false));
   }
 
+  // console.log(isMovies)
+
   React.useEffect(() => {
     getFilterMovies(isMoviesData)
   // eslint-disable-next-line react-hooks/exhaustive-deps
