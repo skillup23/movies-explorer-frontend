@@ -59,7 +59,7 @@ function MoviesCard({ movie, addSaveMovie, deleteMovies }) {
           </a>
           <button type="button"
             className={`movies-card__flag ${isSaveMovie ? "movies-card__flag_active" : "movies-card__flag_disactive"}`}
-            onClick={handleSaveMovie}
+            onClick={isSaveMovie ? handleDeleteClick : handleSaveMovie}
           ></button>
         </Route>
         <Route path='/saved-movies'>

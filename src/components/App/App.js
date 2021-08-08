@@ -23,6 +23,7 @@ function App() {
   // const [isMoviesData, setIsMoviesData] = React.useState([]);
   const [isSaveMovies, setIsSaveMovies] = React.useState([]);
   // const [isCardsLoading, setIsCardsLoading] = React.useState(false);
+  const [isErrorSearchMovies, setIsErrorSearchMovies] = React.useState(false);
   const history = useHistory();
 
   // console.log(currentUser)
@@ -50,7 +51,10 @@ function App() {
             return item.owner === currentUser._id
           })
           setIsSaveMovies(saveMovies)
-        }).catch(err => console.log(`Ошибка получения сохраненных фильмов: ${err}`))
+        }).catch((err) => {
+          console.log(`Ошибка получения сохраненных фильмов: ${err}`)
+          setIsErrorSearchMovies(true)
+        })
     }
   }, [currentUser._id, isLoggedIn]);
 
@@ -148,6 +152,7 @@ function App() {
             path="/movies"
             loggedIn={isLoggedIn}
             addSaveMovie={saveNewMovies}
+            deleteMovies={deleteMovies}
             // moviesData={isMoviesData}
             // isCardsLoading={isCardsLoading}
             component={Movies}
@@ -158,6 +163,7 @@ function App() {
             loggedIn={isLoggedIn}
             saveMovies={isSaveMovies}
             deleteMovies={deleteMovies}
+            isErrorSearchMovies={isErrorSearchMovies}
             // addSaveMovie={saveNewMovies}
             component={SavedMovies}
           // isCardsLoading={isCardsLoading}

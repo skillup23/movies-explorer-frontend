@@ -4,22 +4,28 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import apiMovies from '../../utils/MoviesApi'
 
-function Movies({ addSaveMovie }) {
+function Movies({ addSaveMovie, deleteMovies }) {
   const [isMoviesData, setIsMoviesData] = React.useState([]);
   const [isSearch, setIsSearch] = React.useState('');
   const [isMovies, setIsMovies] = React.useState([]);
   // const [isShortMovies, setIsShortMovies] = React.useState([]);
   const [isChecked, setIsChecked] = React.useState(false);
+  const [isErrorSearchMovies, setIsErrorSearchMovies] = React.useState(false);
+  const [isNotFoundMovies, setIsNotFoundMovies] = React.useState(false);
   const [isCardsLoading, setIsCardsLoading] = React.useState(false);
 
   function onSetMovies(search) {
+    setIsNotFoundMovies(false)
     setIsCardsLoading(true);
     setIsSearch(search)
       apiMovies.getMoviesList()
         .then((moviesData) => {
           setIsMoviesData(moviesData)
         })
-        .catch(err => console.log(`Ошибка получения фильмов: ${err}`))
+        .catch((err) => {
+          console.log(`Ошибка получения фильмов: ${err}`)
+          setIsErrorSearchMovies(true)
+        })
         .finally(() => setIsCardsLoading(false));
   }
 
@@ -35,12 +41,22 @@ function Movies({ addSaveMovie }) {
       const moviesFiltered = moviesData.filter(function (item) {
         return item.nameRU.toLowerCase().includes(isSearch);
       });
+      if(moviesFiltered.length === 0) {
+        setIsNotFoundMovies(true)
+      } else {
+        setIsNotFoundMovies(false)
+      }
       setIsMovies(moviesFiltered)
       showFirstMovies(moviesFiltered)
     } else {
       const moviesShortFiltered = moviesData.filter(function (item) {
         return item.nameRU.toLowerCase().includes(isSearch) && item.duration <= 40;
       });
+      if(moviesShortFiltered.length === 0) {
+        setIsNotFoundMovies(true)
+      } else {
+        setIsNotFoundMovies(false)
+      }
       setIsMovies(moviesShortFiltered)
       showFirstMovies(moviesShortFiltered)
     }
@@ -107,9 +123,12 @@ function Movies({ addSaveMovie }) {
         isCardsLoading={isCardsLoading}
         // isMoviesRender={isChecked ? isShortMovies : isMoviesRender}
         isMoviesRender={isMoviesRender}
+        deleteMovies={deleteMovies}
         disableButtonMore={disableButtonMore}
         addSaveMovie={addSaveMovie}
         showMoviesMore={showMoviesMore}
+        isErrorSearchMovies={isErrorSearchMovies}
+        isNotFoundMovies={isNotFoundMovies}
       />
     </div >
   )

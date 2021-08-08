@@ -13,6 +13,11 @@
   padding-inline-start: 0;
 }
 
+.movies-card-list__text {
+  text-align: center;
+  font-weight: normal;
+}
+
 .movies-card-list__button-more {
   margin: 80px auto 0 auto;
   display: block;

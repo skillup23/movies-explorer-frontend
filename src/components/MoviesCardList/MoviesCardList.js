@@ -4,10 +4,20 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
 import { Route, Switch } from "react-router-dom";
 
-function MoviesCardList({ isCardsLoading, isMoviesRender, disableButtonMore, showMoviesMore, addSaveMovie, deleteMovies, showMoviesAll }) {
+function MoviesCardList({ isCardsLoading, isMoviesRender, disableButtonMore, showMoviesMore, addSaveMovie, deleteMovies, showMoviesAll, isErrorSearchMovies, isNotFoundMovies }) {
 
   return (
     <section className="movies-card-list__section">
+      {isNotFoundMovies &&
+        <h2 className="movies-card-list__text">
+          Ничего не найдено
+        </h2>
+      }
+      {isErrorSearchMovies &&
+        <h2 className="movies-card-list__text">
+          Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз
+        </h2>
+      }
       {isCardsLoading && (
         <Preloader />
       )}
