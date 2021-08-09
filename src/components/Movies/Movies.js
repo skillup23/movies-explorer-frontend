@@ -5,10 +5,9 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import apiMovies from '../../utils/MoviesApi'
 
 function Movies({ addSaveMovie, deleteMovies }) {
-  const [isMoviesData, setIsMoviesData] = React.useState([]);
-  const [isSearch, setIsSearch] = React.useState('');
-  const [isMovies, setIsMovies] = React.useState([]);
-  // const [isShortMovies, setIsShortMovies] = React.useState([]);
+  const [moviesData, setMoviesData] = React.useState([]);
+  const [searchWord, setSearchWord] = React.useState('');
+  const [movies, setMovies] = React.useState([]);
   const [isChecked, setIsChecked] = React.useState(false);
   const [isErrorSearchMovies, setIsErrorSearchMovies] = React.useState(false);
   const [isNotFoundMovies, setIsNotFoundMovies] = React.useState(false);
@@ -17,47 +16,54 @@ function Movies({ addSaveMovie, deleteMovies }) {
   function onSetMovies(search) {
     setIsNotFoundMovies(false)
     setIsCardsLoading(true);
-    setIsSearch(search)
-      apiMovies.getMoviesList()
-        .then((moviesData) => {
-          setIsMoviesData(moviesData)
-        })
-        .catch((err) => {
-          console.log(`Ошибка получения фильмов: ${err}`)
-          setIsErrorSearchMovies(true)
-        })
-        .finally(() => setIsCardsLoading(false));
+    setSearchWord(search)
+    apiMovies.getMoviesList()
+      .then((moviesData) => {
+        setMoviesData(moviesData)
+      })
+      .catch((err) => {
+        console.log(`Ошибка получения фильмов: ${err}`)
+        setIsErrorSearchMovies(true)
+        setIsNotFoundMovies(false)
+      })
+      .finally(() => setIsCardsLoading(false));
   }
 
-  // console.log(isMovies)
-
   React.useEffect(() => {
-    getFilterMovies(isMoviesData)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isChecked, isMoviesData])
+    const arrayMovies = JSON.parse(localStorage.getItem('moviesFiltered'));
+    if (moviesData.length === 0 ) {
+      setMovies(arrayMovies)
+      showFirstMovies(arrayMovies)
+      getFilterMovies(arrayMovies)
+    } else {
+      getFilterMovies(moviesData)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isChecked, moviesData])
 
   function getFilterMovies(moviesData) {
     if (!isChecked) {
       const moviesFiltered = moviesData.filter(function (item) {
-        return item.nameRU.toLowerCase().includes(isSearch);
+        return item.nameRU.toLowerCase().includes(searchWord);
       });
-      if(moviesFiltered.length === 0) {
+      if (moviesFiltered.length === 0) {
         setIsNotFoundMovies(true)
       } else {
         setIsNotFoundMovies(false)
       }
-      setIsMovies(moviesFiltered)
+      setMovies(moviesFiltered)
       showFirstMovies(moviesFiltered)
+      localStorage.setItem('moviesFiltered', JSON.stringify(moviesFiltered));
     } else {
       const moviesShortFiltered = moviesData.filter(function (item) {
-        return item.nameRU.toLowerCase().includes(isSearch) && item.duration <= 40;
+        return item.nameRU.toLowerCase().includes(searchWord) && item.duration <= 40;
       });
-      if(moviesShortFiltered.length === 0) {
+      if (moviesShortFiltered.length === 0) {
         setIsNotFoundMovies(true)
       } else {
         setIsNotFoundMovies(false)
       }
-      setIsMovies(moviesShortFiltered)
+      setMovies(moviesShortFiltered)
       showFirstMovies(moviesShortFiltered)
     }
   }
@@ -71,9 +77,9 @@ function Movies({ addSaveMovie, deleteMovies }) {
   }
 
   //Изменение количества карточек на кнопку Еще
-  const [disableButtonMore, setDisableButtonMore] = React.useState(true);
+  const [isDisableButtonMore, setIsDisableButtonMore] = React.useState(true);
   const [numberState, setNumberState] = React.useState(0);
-  const [isMoviesRender, setIsMoviesRender] = React.useState([]);
+  const [moviesRender, setMoviesRender] = React.useState([]);
 
   function showMoviesMore() {
     if (document.documentElement.clientWidth > 768) {
@@ -85,17 +91,17 @@ function Movies({ addSaveMovie, deleteMovies }) {
 
   function renderNextMovies(n) {
     setNumberState(numberState + n)
-    const nextMovies = isMovies.slice(0, n + numberState)
-    setIsMoviesRender(nextMovies)
+    const nextMovies = movies.slice(0, n + numberState)
+    setMoviesRender(nextMovies)
   }
 
   React.useEffect(() => {
-    if (isMovies.length === isMoviesRender.length) {
-      setDisableButtonMore(false)
+    if (movies.length === moviesRender.length) {
+      setIsDisableButtonMore(false)
     } else {
-      setDisableButtonMore(true)
+      setIsDisableButtonMore(true)
     }
-  }, [isMovies.length, isMoviesRender.length, disableButtonMore]);
+  }, [movies.length, moviesRender.length, isDisableButtonMore]);
 
   function showFirstMovies(moviesFiltered) {
     if (document.documentElement.clientWidth > 768) {
@@ -110,7 +116,7 @@ function Movies({ addSaveMovie, deleteMovies }) {
   function renderFirstMovies(n, moviesFiltered) {
     setNumberState(n)
     const firstMovies = moviesFiltered.slice(0, n)
-    setIsMoviesRender(firstMovies)
+    setMoviesRender(firstMovies)
   }
 
   return (
@@ -121,10 +127,9 @@ function Movies({ addSaveMovie, deleteMovies }) {
       />
       <MoviesCardList
         isCardsLoading={isCardsLoading}
-        // isMoviesRender={isChecked ? isShortMovies : isMoviesRender}
-        isMoviesRender={isMoviesRender}
+        moviesRender={moviesRender}
         deleteMovies={deleteMovies}
-        disableButtonMore={disableButtonMore}
+        isDisableButtonMore={isDisableButtonMore}
         addSaveMovie={addSaveMovie}
         showMoviesMore={showMoviesMore}
         isErrorSearchMovies={isErrorSearchMovies}
@@ -135,41 +140,3 @@ function Movies({ addSaveMovie, deleteMovies }) {
 }
 
 export default Movies;
-
-
-
-  // прелоадер
-  // const [isCardsLoading, setIsCardsLoading] = React.useState(false);
-
-  // function onSetMovies(search) {
-  //   setIsCardsLoading(true);
-  //   apiMovies.getMoviesList()
-  //     .then((moviesData) => {
-  //       if (isChecked === false) {
-  //         const moviesFiltered = moviesData.filter(function (item) {
-  //           return item.nameRU.toLowerCase().includes(search);
-  //         });
-  //         setIsMovies(moviesFiltered);
-  //         setIsChecked(false)
-  //       } else {
-  //         const moviesFiltered = moviesData.filter(function (item) {
-  //           return item.nameRU.toLowerCase().includes(search) && item.duration <= 40;
-  //         });
-  //         setIsMovies(moviesFiltered);
-  //         setIsChecked(true)
-  //       }
-  //     })
-  //     .catch(err => console.log(err))
-  //     .finally(() => setIsCardsLoading(false));
-  // }
-
-
-    // React.useEffect(() => {
-  //   setDisableButtonMore(true)
-  //   if (document.documentElement.clientWidth > 768) {
-  //     renderFirstMovies(3)
-  //   } else {
-  //     renderFirstMovies(2)
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [isMovies]);

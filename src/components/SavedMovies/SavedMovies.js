@@ -6,9 +6,8 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 function SavedMovies({ isCardsLoading, saveMovies, deleteMovies, isErrorSearchMovies }) {
   const [isChecked, setIsChecked] = React.useState(false);
   const [isFilter, setIsFilter] = React.useState(false);
-  // const [isSearch, setIsSearch] = React.useState('');
-  const [isMoviesRender, setIsMoviesRender] = React.useState([]);
-  const [disableButtonMore, setDisableButtonMore] = React.useState(false);
+  const [moviesRender, setMoviesRender] = React.useState([]);
+  const [isDisableButtonMore, setIsDisableButtonMore] = React.useState(false);
   const [isNotFoundMovies, setIsNotFoundMovies] = React.useState(false);
 
   function onSetMovies(search) {
@@ -23,7 +22,7 @@ function SavedMovies({ isCardsLoading, saveMovies, deleteMovies, isErrorSearchMo
       } else {
         setIsNotFoundMovies(false)
       }
-      setIsMoviesRender(moviesFiltered)
+      setMoviesRender(moviesFiltered)
     } else {
       const moviesShortFiltered = saveMovies.filter(function (item) {
         return item.nameRU.toLowerCase().includes(search) && item.duration <= 40;
@@ -33,9 +32,9 @@ function SavedMovies({ isCardsLoading, saveMovies, deleteMovies, isErrorSearchMo
       } else {
         setIsNotFoundMovies(false)
       }
-      setIsMoviesRender(moviesShortFiltered)
+      setMoviesRender(moviesShortFiltered)
     }
-    setDisableButtonMore(true)
+    setIsDisableButtonMore(true)
   }
 
   function onShortMovies(disable) {
@@ -53,11 +52,11 @@ function SavedMovies({ isCardsLoading, saveMovies, deleteMovies, isErrorSearchMo
     const moviesShortFiltered = saveMovies.filter(function (item) {
       return item.duration <= 40;
     });
-    setIsMoviesRender(moviesShortFiltered)
+    setMoviesRender(moviesShortFiltered)
   }
 
   function showMoviesAll() {
-    setDisableButtonMore(false)
+    setIsDisableButtonMore(false)
     setIsFilter(false)
     setIsNotFoundMovies(false)
   }
@@ -69,15 +68,13 @@ function SavedMovies({ isCardsLoading, saveMovies, deleteMovies, isErrorSearchMo
         onShortMovies={onShortMovies}
       />
       <MoviesCardList
-        // isMoviesRender={saveMovies}
-        isMoviesRender={isFilter ? isMoviesRender : saveMovies}
+        moviesRender={isFilter ? moviesRender : saveMovies}
         isCardsLoading={isCardsLoading}
         deleteMovies={deleteMovies}
-        disableButtonMore={disableButtonMore}
+        isDisableButtonMore={isDisableButtonMore}
         isErrorSearchMovies={isErrorSearchMovies}
         isNotFoundMovies={isNotFoundMovies}
         showMoviesAll={showMoviesAll}
-      // addSaveMovie={addSaveMovie}
       />
     </div >
   )

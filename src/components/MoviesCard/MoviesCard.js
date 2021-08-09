@@ -24,7 +24,8 @@ function MoviesCard({ movie, addSaveMovie, deleteMovies }) {
   }
 
   function handleDeleteClick() {
-    deleteMovies(movie._id)
+    deleteMovies(movie.id || movie.movieId)
+    setIsSaveMovie(!isSaveMovie)
   }
 
   function getTimeFromMins(mins) {
@@ -35,17 +36,14 @@ function MoviesCard({ movie, addSaveMovie, deleteMovies }) {
     } else {
       return hours + 'ч. ' + minutes + 'м.';
     }
-    
   };
 
   return (
     <li className="movies-card">
       <h5 className="movies-card__title">
-        {/* 33 слова о дизайне */}
         {movie.nameRU}
       </h5>
       <p className="movies-card__time">
-        {/* 1ч 47м */}
         {getTimeFromMins(movie.duration)}
       </p>
       <Switch>
@@ -81,9 +79,3 @@ function MoviesCard({ movie, addSaveMovie, deleteMovies }) {
 }
 
 export default MoviesCard;
-
-
-      // {/* <div
-      //   style={movieStyle}
-      //   className="movies-card__img"
-      // ></div> */}

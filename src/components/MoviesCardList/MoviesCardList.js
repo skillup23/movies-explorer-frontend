@@ -4,7 +4,7 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
 import { Route, Switch } from "react-router-dom";
 
-function MoviesCardList({ isCardsLoading, isMoviesRender, disableButtonMore, showMoviesMore, addSaveMovie, deleteMovies, showMoviesAll, isErrorSearchMovies, isNotFoundMovies }) {
+function MoviesCardList({ isCardsLoading, moviesRender, isDisableButtonMore, showMoviesMore, addSaveMovie, deleteMovies, showMoviesAll, isErrorSearchMovies, isNotFoundMovies }) {
 
   return (
     <section className="movies-card-list__section">
@@ -23,7 +23,7 @@ function MoviesCardList({ isCardsLoading, isMoviesRender, disableButtonMore, sho
       )}
       {!isCardsLoading && (
         <ul className="movies-card-list">
-          {isMoviesRender.map((movie) => (
+          {moviesRender.map((movie) => (
             <MoviesCard
               key={movie.id || movie._id}
               movie={movie}
@@ -36,24 +36,19 @@ function MoviesCardList({ isCardsLoading, isMoviesRender, disableButtonMore, sho
       <Switch>
         <Route exact path='/movies'>
           <button type="button"
-            className={disableButtonMore ? "movies-card-list__button-more" : "movies-card-list__button-more_disable"}
+            className={isDisableButtonMore ? "movies-card-list__button-more" : "movies-card-list__button-more_disable"}
             onClick={showMoviesMore}>
             Ещё
           </button>
         </Route>
         <Route path='/saved-movies'>
           <button type="button"
-            className={disableButtonMore ? "movies-card-list__button-more" : "movies-card-list__button-more_disable"}
+            className={isDisableButtonMore ? "movies-card-list__button-more" : "movies-card-list__button-more_disable"}
             onClick={showMoviesAll}>
             Показать все
           </button>
         </Route>
       </Switch>
-      {/* <button type="button"
-        className={disableButtonMore ? "movies-card-list__button-more" : "movies-card-list__button-more_disable"}
-        onClick={showMoviesMore}>
-        Ещё
-      </button> */}
     </section>
   )
 }
