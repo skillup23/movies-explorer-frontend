@@ -2,26 +2,53 @@ import React from "react";
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
+import { Route, Switch } from "react-router-dom";
 
-function MoviesCardList({ movies, isCardsLoading }) {
+function MoviesCardList({ isCardsLoading, moviesRender, isDisableButtonMore, showMoviesMore, addSaveMovie, deleteMovies, showMoviesAll, isErrorSearchMovies, isNotFoundMovies }) {
+
   return (
     <section className="movies-card-list__section">
+      {isNotFoundMovies &&
+        <h2 className="movies-card-list__text">
+          Ничего не найдено
+        </h2>
+      }
+      {isErrorSearchMovies &&
+        <h2 className="movies-card-list__text">
+          Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз
+        </h2>
+      }
       {isCardsLoading && (
         <Preloader />
       )}
       {!isCardsLoading && (
         <ul className="movies-card-list">
-          {movies.map((movie) => (
+          {moviesRender.map((movie) => (
             <MoviesCard
-              key={movie.link}
+              key={movie.id || movie._id}
               movie={movie}
+              addSaveMovie={addSaveMovie}
+              deleteMovies={deleteMovies}
             />
           ))}
         </ul >
       )}
-      <button type="button" className="movies-card-list__button-more">
-        Ещё
-      </button>
+      <Switch>
+        <Route exact path='/movies'>
+          <button type="button"
+            className={isDisableButtonMore ? "movies-card-list__button-more" : "movies-card-list__button-more_disable"}
+            onClick={showMoviesMore}>
+            Ещё
+          </button>
+        </Route>
+        <Route path='/saved-movies'>
+          <button type="button"
+            className={isDisableButtonMore ? "movies-card-list__button-more" : "movies-card-list__button-more_disable"}
+            onClick={showMoviesAll}>
+            Показать все
+          </button>
+        </Route>
+      </Switch>
     </section>
   )
 }

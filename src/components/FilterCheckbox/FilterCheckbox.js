@@ -13,6 +13,7 @@ class FilterCheckbox extends React.Component {
 
   handleChange() {
     this.setState({ isChecked: !this.state.isChecked })
+    this.props.onShortMovies(this.state.isChecked)
   }
 
   render () {
@@ -30,18 +31,28 @@ export default FilterCheckbox;
 // function FilterCheckbox() {
 //   const [isChecked, setIsChecked] = React.useState(false);
 
-  // function handleChange(e) {
-  //   e.preventDefault();
-  //   if(isChecked === true ){
-  //     setIsChecked(false)
-  //   } else {
-  //     setIsChecked(true)
-  //   }
-  // }
+//   function handleChange(e) {
+//     e.preventDefault();
+//     test()
+//     console.log(isChecked)
+//     // if(isChecked === true ){
+//     //   test()
+//     // } else {
+//     //   test2()
+//     // }
+//   }
 
-  // React.useEffect(() => {
-  //   console.log(isChecked)
-  // }, [isChecked]);
+//   function test() {
+//     setIsChecked(!isChecked)
+//   }
+
+//   // function test2() {
+//   //   setIsChecked(true)
+//   // }
+
+//   // React.useEffect(() => {
+//   //   console.log(isChecked)
+//   // }, [isChecked]);
 
 //   return (
 //     <label className="switch">

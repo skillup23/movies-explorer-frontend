@@ -67,6 +67,11 @@
   border: 1px solid black;
 }
 
+.auth-form__button_disabled {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
 .auth-form__text {
   font-style: normal;
   font-weight: normal;
