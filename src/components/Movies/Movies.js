@@ -31,7 +31,8 @@ function Movies({ addSaveMovie, deleteMovies }) {
 
   React.useEffect(() => {
     const arrayMovies = JSON.parse(localStorage.getItem('moviesFiltered'));
-    if (moviesData.length === 0 ) {
+    // if (moviesData.length === 0 ) {
+    if (arrayMovies !== null && moviesData.length === 0) {
       setMovies(arrayMovies)
       showFirstMovies(arrayMovies)
       getFilterMovies(arrayMovies)
